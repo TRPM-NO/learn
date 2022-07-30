@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.addItem}">상품 등록</h2>
+    </div>
+
+    <form action="item.html" th:action th:object="${item}" method="post">
+
+        <div>
+            <label for="itemName" th:text="#{label.item.itemName}">상품명</label>
+            <input type="text" id="itemName" th:field="*{itemName}"
+                   class="form-control" th:placeholder="#{placeholder.item.name}" placeholder="이름을 입력하세요">
+
+        </div>
+        <div>
+            <label for="price" th:text="#{label.item.price}">가격</label>
+            <input type="text" id="price" th:field="*{price}"
+                   class="form-control" th:placeholder="#{placeholder.item.price}" placeholder="가격을 입력하세요">
+        </div>
+
+        <div>
+            <label for="quantity" th:text="#{label.item.quantity}">수량</label>
+            <input type="text" id="quantity" th:field="*{quantity}"
+                   class="form-control" th:placeholder="#{placeholder.item.quantity}" placeholder="수량을 입력하세요">
+        </div>
+
+        <div>
+            <label for="manufacturer" th:text="#{label.item.manufacturer}">제조사</label>
+            <input type="text" id="manufacturer" th:field="*{manufacturer}"
+                   class="form-control" th:placeholder="#{placeholder.item.manufacturer}" placeholder="제조사를 입력하세요">
+        </div>
+
+        <div>
+            <label for="classification" th:text="#{label.item.classification}">분류</label>
+            <input type="text" id="classification" th:field="*{classification}"
+                   class="form-control" th:placeholder="#{placeholder.item.classification}" placeholder="분류를 입력하세요">
+        </div>
+
+        <div>
+            <label for="itemStatus" th:text="#{label.item.itemStatus}">상품 상태</label>
+            <select class="form-select" th:field="*{itemStatus}" id="itemStatus">
+                <option value="" th:text="#{label.item.itemStatusSelect}">Open this select menu</option>
+                <option th:each="itemStatusCode : ${itemStatusCodes}"
+                        th:value="${itemStatusCode.code}"
+                        th:text="#{${itemStatusCode.displayName}}">
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <label for="deliveryMethod" th:text="#{label.item.deliveryMethod}">배송 방법</label>
+            <select class="form-select" th:field="*{deliveryMethod}" id="deliveryMethod">
+                <option value="" th:text="#{label.item.deliveryMethodSelect}">Open this select menu</option>
+
+                <option th:each="deliveryMethodCode : ${deliveryMethodCodes}"
+                        th:value="${deliveryMethodCode.code}"
+                        th:text="#{${deliveryMethodCode.displayName}}">
+                </option>
+            </select>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}">상품 등록</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='items.html'"
+                        type="button" th:text="#{button.cancel}"
+                        th:onclick="|location.href='@{/item}'|">취소</button>
+            </div>
+        </div>
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>
