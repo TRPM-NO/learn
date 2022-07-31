@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.noname.service.domain.item.Item;
 import web.noname.service.domain.item.ItemCode;
 import web.noname.service.domain.item.ItemRepository;
@@ -32,6 +31,23 @@ public class ItemController {
         model.addAttribute("item", new Item());
         return "item/addForm";
     }
+
+    @GetMapping("/{itemId}")
+    public String item(@PathVariable long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "item/item";
+    }
+
+    @PostMapping("/add")
+    public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes, Model model) {
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        return "redirect:/item/{itemId}";
+    }
+
+
+
 
 
     /**
